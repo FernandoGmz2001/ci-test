@@ -16,16 +16,17 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm install
-      - name: Copy folder content recursively to remote
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          source: functionTest
-          target: ~/testFolder
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.PASSWORD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+      - name: Copiar carpeta al servidor remoto
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reemplaza con el nombre de tu secreto SSH
+        run: |
+          # Configurar la clave SSH
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          # Copiar la carpeta al servidor remoto
+          scp -r /functionTest ultradev@admins.neuralwisp.com:~/testFolder
       - name: Finish
         run: echo "Finished"
   close_job:
