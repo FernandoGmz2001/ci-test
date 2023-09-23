@@ -19,7 +19,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Copy folder content recursively to remote
-        uses: ArthurYdalgo/github-action-scp@release
+        uses: TwanLuttik/gh-action-scp
         with:
           local: CI-TEST
           remote: ~/testFolder
