@@ -17,4 +17,6 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-optional --no-audit --no-fund
+      - name: Testing App
+        run: npm run test
