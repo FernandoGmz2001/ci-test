@@ -19,7 +19,7 @@ jobs:
       - name: Copy folder content recursively to remote
         uses: appleboy/scp-action@v0.1.4
         with:
-          source: CI-TEST
+          source: functionTest
           target: ~/testFolder
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USER }}
