@@ -16,8 +16,6 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm install
-      - name: Build
-        run: npm run build
       - name: Copy folder content recursively to remote
         uses: appleboy/scp-action@v0.1.4
         with:
