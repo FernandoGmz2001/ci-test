@@ -19,14 +19,14 @@ jobs:
       - name: Build
         run: npm run build
       - name: Copy folder content recursively to remote
-        uses: TwanLuttik/gh-action-scp
+        uses: appleboy/scp-action@v0.1.4
         with:
-          local: CI-TEST
-          remote: ~/testFolder
+          source: CI-TEST
+          target: ~/testFolder
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
       - name: Finish
         run: echo "Finished"
