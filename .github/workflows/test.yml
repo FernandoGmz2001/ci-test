@@ -1,4 +1,4 @@
-name: Testing CI
+name: Build and Deploy v3.0
 
 on:
   pull_request:
@@ -8,11 +8,35 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
-      - name: Test
-        run: echo "Hello World"
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Copy folder content recursively to remote
+        uses: ArthurYdalgo/github-action-scp@release
+        with:
+          local: CI-TEST
+          remote: ~/testFolder
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+      - name: Finish
+        run: echo "Finished"
+  close_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Finish
+        run: echo "Finished"
+
+        
+
+      
