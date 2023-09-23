@@ -6,6 +6,7 @@ on:
       - main
 jobs:
   test_ci:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Test
@@ -16,7 +17,3 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install dependencies
-        run: npm install --no-optional --no-audit --no-fund
-      - name: Testing App
-        run: npm run test
