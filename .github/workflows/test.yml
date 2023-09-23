@@ -20,11 +20,6 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reemplaza con el nombre de tu secreto SSH
         run: |
-          # Configurar la clave SSH
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          
           # Copiar la carpeta al servidor remoto
           scp -r /functionTest ultradev@admins.neuralwisp.com:~/testFolder
       - name: Finish
